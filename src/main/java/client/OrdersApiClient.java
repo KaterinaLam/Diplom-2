@@ -9,6 +9,7 @@ import static io.restassured.RestAssured.given;
 
 
 public class OrdersApiClient extends BaseHttpClient {
+    private static final String OrderApi = "/orders";
 
     @Step("Create order")
     public Response makeOrder(Order orderParameters, Authorization authorizationInfo) {
@@ -17,7 +18,7 @@ public class OrdersApiClient extends BaseHttpClient {
                 .auth().oauth2(authorizationInfo.getAccessToken())
                 .body(orderParameters.toJson())
                 .when()
-                .post("orders");
+                .post(OrderApi);
     }
 
     @Step("Create order without auth")
@@ -26,7 +27,7 @@ public class OrdersApiClient extends BaseHttpClient {
                 .spec(getRequestSpecification())
                 .body(orderParameters.toJson())
                 .when()
-                .post("orders");
+                .post(OrderApi);
     }
 
     @Step("Accept Order")
@@ -35,6 +36,6 @@ public class OrdersApiClient extends BaseHttpClient {
                 .spec(getRequestSpecification())
                 .auth().oauth2(authorizationInfo.getAccessToken())
                 .when()
-                .get("orders");
+                .get(OrderApi);
     }
 }
